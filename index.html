@@ -1,0 +1,476 @@
+<title>שומר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800;900&family=Assistant:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#F5F7FA; --surface:#FFFFFF; --surface-2:#EEF2F7;
+    --ink:#12203A; --muted:#5A6675; --line:#E2E7EE;
+    --primary:#1D4E89; --primary-strong:#143A6B; --primary-soft:#DCE8F6;
+    --accent:#C8923A; --accent-2:#E4B65E; --accent-soft:#F5E7C8;
+    --safe:#2F7D6B;
+    --brand-1:#0C1830; --brand-2:#1B3E76; --brand-glow:rgba(228,182,94,.28);
+    --shadow:0 10px 30px rgba(18,32,58,.10); --shadow-sm:0 3px 12px rgba(18,32,58,.08);
+    --radius:16px; --radius-lg:24px;
+    --maxw:1120px;
+    --ff-display:"Heebo",system-ui,"Segoe UI",Arial,sans-serif;
+    --ff-body:"Assistant",system-ui,"Segoe UI",Arial,sans-serif;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --bg:#0D131C; --surface:#151D29; --surface-2:#1C2632;
+      --ink:#EAF1FA; --muted:#9DA9B9; --line:#26303F;
+      --primary:#4E86C8; --primary-strong:#6FA0DA; --primary-soft:#1B2A3F;
+      --accent:#E4B65E; --accent-2:#F0C978; --accent-soft:#2A2415;
+      --safe:#59B39B;
+      --shadow:0 12px 34px rgba(0,0,0,.45); --shadow-sm:0 3px 14px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0D131C; --surface:#151D29; --surface-2:#1C2632;
+    --ink:#EAF1FA; --muted:#9DA9B9; --line:#26303F;
+    --primary:#4E86C8; --primary-strong:#6FA0DA; --primary-soft:#1B2A3F;
+    --accent:#E4B65E; --accent-2:#F0C978; --accent-soft:#2A2415;
+    --safe:#59B39B;
+    --shadow:0 12px 34px rgba(0,0,0,.45); --shadow-sm:0 3px 14px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    direction:rtl; margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--ff-body); font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--ff-display); line-height:1.12; text-wrap:balance; margin:0}
+  p{margin:0}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:20px}
+  section{padding-block:72px}
+  .eyebrow{font-family:var(--ff-display); font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    font-size:13px; color:var(--accent)}
+  .lead{color:var(--muted); font-size:19px}
+
+  /* Buttons */
+  .btn{display:inline-flex; align-items:center; gap:9px; font-family:var(--ff-display); font-weight:700;
+    font-size:16px; padding:13px 24px; border-radius:999px; border:1.5px solid transparent; cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent-2),var(--accent)); color:#22160A;
+    box-shadow:0 8px 22px rgba(200,146,58,.35)}
+  .btn-ghost{background:transparent; border-color:rgba(255,255,255,.35); color:#fff}
+  .btn-solid{background:var(--primary); color:#fff}
+  .btn-solid:hover{background:var(--primary-strong)}
+
+  /* Header */
+  header.nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:50;
+    background:color-mix(in srgb,var(--bg) 86%, transparent); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:14px}
+  .brand{display:flex; align-items:center; gap:11px; font-family:var(--ff-display); font-weight:900; font-size:21px}
+  .brand .mark{width:34px; height:34px; flex:0 0 auto}
+  .nav-links{display:flex; align-items:center; gap:28px; font-weight:600; font-size:15px}
+  .nav-links a{color:var(--muted)} .nav-links a:hover{color:var(--ink)}
+  .nav-cta{display:flex; align-items:center; gap:12px}
+  .menu-btn{display:none; background:none; border:0; cursor:pointer; color:var(--ink); padding:6px}
+
+  /* Hero */
+  .hero{position:relative; overflow:hidden; color:#EAF1FA;
+    background:radial-gradient(1200px 600px at 82% -10%, var(--brand-glow), transparent 60%),
+               linear-gradient(160deg,var(--brand-1),var(--brand-2));}
+  .hero .wrap{position:relative; display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center;
+    padding-block:84px}
+  .hero h1{font-size:clamp(34px,5vw,56px); font-weight:900; color:#fff}
+  .hero h1 .hl{color:var(--accent-2)}
+  .hero p.lead{color:#C6D4E8; margin-top:18px; max-width:34ch}
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-top:30px}
+  .hero-trust{display:flex; gap:22px; flex-wrap:wrap; margin-top:34px; color:#AFC0D8; font-size:14.5px; font-weight:600}
+  .hero-trust span{display:flex; align-items:center; gap:8px}
+  .hero-trust svg{color:var(--accent-2)}
+  .hero-anim{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .hero-anim.d2{animation-delay:.08s} .hero-anim.d3{animation-delay:.16s}
+  @keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+
+  /* Phone mock */
+  .phone{justify-self:center; width:248px; filter:drop-shadow(0 30px 50px rgba(0,0,0,.4)); animation:float 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)}}
+
+  /* Trust strip */
+  .strip{background:var(--surface); border-block:1px solid var(--line)}
+  .strip .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px 32px; padding-block:26px}
+  .strip .item{display:flex; align-items:center; gap:11px; font-weight:700; font-family:var(--ff-display); font-size:15.5px}
+  .strip .item svg{color:var(--primary); flex:0 0 auto}
+
+  /* Section heads */
+  .shead{max-width:640px; margin-bottom:40px}
+  .shead h2{font-size:clamp(27px,3.4vw,38px); font-weight:800; margin-top:10px}
+  .shead p{color:var(--muted); margin-top:12px; font-size:18px}
+
+  /* Feature grid */
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:26px;
+    box-shadow:var(--shadow-sm); transition:transform .18s ease, box-shadow .18s ease}
+  .card:hover{transform:translateY(-4px); box-shadow:var(--shadow)}
+  .ico{width:46px; height:46px; border-radius:12px; display:grid; place-items:center; margin-bottom:16px;
+    background:var(--primary-soft); color:var(--primary)}
+  .card h3{font-size:19px; font-weight:800; margin-bottom:7px}
+  .card p{color:var(--muted); font-size:15.5px}
+
+  /* How it works */
+  .how{background:var(--surface-2)}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; counter-reset:step}
+  .step{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px 24px}
+  .step::before{counter-increment:step; content:counter(step); position:absolute; inset-inline-start:24px; top:-20px;
+    width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-family:var(--ff-display);
+    font-weight:900; font-size:19px; color:#22160A; background:linear-gradient(135deg,var(--accent-2),var(--accent));
+    box-shadow:0 6px 16px rgba(200,146,58,.4)}
+  .step h3{font-size:19px; font-weight:800; margin:14px 0 6px}
+  .step p{color:var(--muted); font-size:15.5px}
+
+  /* Pricing / options */
+  .prices{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1040px; margin-inline:auto; align-items:stretch}
+  .price{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:30px 26px;
+    box-shadow:var(--shadow-sm); position:relative; display:flex; flex-direction:column}
+  .price.feat{border-color:var(--accent); box-shadow:0 14px 40px rgba(200,146,58,.18)}
+  .badge{position:absolute; top:-13px; inset-inline-end:24px; background:linear-gradient(135deg,var(--accent-2),var(--accent));
+    color:#22160A; font-family:var(--ff-display); font-weight:800; font-size:12.5px; padding:5px 13px; border-radius:999px}
+  .opt-method{font-family:var(--ff-display); font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    font-size:11.5px; color:var(--accent)}
+  .price h3{font-size:20px; font-weight:800; margin-top:4px}
+  .price .sub{color:var(--muted); font-size:14.5px; margin-top:4px; min-height:2.6em}
+  .amount{font-family:var(--ff-display); font-weight:900; font-size:40px; margin:14px 0 2px; color:var(--ink)}
+  .amount small{font-size:15px; font-weight:600; color:var(--muted)}
+  .price ul{list-style:none; padding:0; margin:18px 0 24px; display:flex; flex-direction:column; gap:10px}
+  .price li{display:flex; gap:9px; align-items:flex-start; color:var(--muted); font-size:14.5px; line-height:1.45}
+  .price li svg{flex:0 0 auto; margin-top:2px}
+  .price li.pro svg{color:var(--safe)}
+  .price li.con svg{color:var(--danger)}
+  .price .btn{width:100%; justify-content:center; margin-top:auto}
+  .price-note{text-align:center; color:var(--muted); font-size:14px; margin-top:22px}
+
+  /* FAQ */
+  .faq{max-width:760px; margin-inline:auto; display:flex; flex-direction:column; gap:12px}
+  details{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:4px 20px}
+  summary{cursor:pointer; list-style:none; padding:16px 0; font-family:var(--ff-display); font-weight:700; font-size:17px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px}
+  summary::-webkit-details-marker{display:none}
+  summary .chev{transition:transform .2s ease; color:var(--accent); flex:0 0 auto}
+  details[open] summary .chev{transform:rotate(180deg)}
+  details p{color:var(--muted); font-size:15.5px; padding:0 0 18px}
+
+  /* Contact / CTA */
+  .cta{background:linear-gradient(160deg,var(--brand-1),var(--brand-2)); color:#EAF1FA; border-radius:var(--radius-lg);
+    padding:52px 40px; text-align:center; box-shadow:var(--shadow); overflow:hidden; position:relative}
+  .cta h2{font-size:clamp(26px,3.4vw,36px); font-weight:900; color:#fff}
+  .cta p{color:#C6D4E8; margin:14px auto 0; max-width:48ch}
+  .cta-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:28px}
+  .fill-note{color:#8FA3C0; font-size:13.5px; margin-top:22px}
+
+  footer{border-top:1px solid var(--line); padding-block:34px; color:var(--muted); font-size:14.5px}
+  .foot{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
+  .foot .brand{font-size:18px; color:var(--ink)}
+
+  @media (max-width:900px){
+    .hero .wrap{grid-template-columns:1fr; text-align:center; padding-block:64px}
+    .hero p.lead{margin-inline:auto} .hero-cta,.hero-trust{justify-content:center}
+    .phone{grid-row:1; width:210px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:1fr; gap:34px}
+    .prices{grid-template-columns:1fr; max-width:460px}
+  }
+  @media (max-width:640px){
+    section{padding-block:56px}
+    .nav-links{display:none} .menu-btn{display:block}
+    .nav-links.open{display:flex; position:absolute; inset-inline:0; top:100%; flex-direction:column; gap:0;
+      background:var(--surface); border-bottom:1px solid var(--line); padding:8px 20px 16px}
+    .nav-links.open a{padding:12px 0; border-bottom:1px solid var(--line)}
+    .grid{grid-template-columns:1fr} .prices{grid-template-columns:1fr}
+    .strip .wrap{justify-content:flex-start; gap:14px 26px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-anim,.phone{animation:none}
+    .btn:hover,.card:hover{transform:none}
+  }
+</style>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 4 8 11v13c0 10 6.8 16.9 16 20 9.2-3.1 16-10 16-20V11L24 4Z" fill="#1D4E89"/>
+        <path d="M24 4 8 11v13c0 10 6.8 16.9 16 20 9.2-3.1 16-10 16-20V11L24 4Z" stroke="#E4B65E" stroke-width="1.5"/>
+        <path d="m16.5 24.5 5 5 10-11" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      שומר
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#features">מה זה כולל</a>
+      <a href="#how">איך זה עובד</a>
+      <a href="#pricing">מחירים</a>
+      <a href="#faq">שאלות</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-solid" href="#pricing">לרכישה</a>
+      <button class="menu-btn" id="menuBtn" aria-label="תפריט">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow hero-anim">סינון תוכן לטלפון ולמחשב</p>
+        <h1 class="hero-anim d2">טלפון <span class="hl">נקי</span>,<br>בשליטה מלאה שלך</h1>
+        <p class="lead hero-anim d2">שומר חוסם תוכן ואתרים לא ראויים בכל הטלפון, מסתיר אפליקציות שלא אישרת,
+          ומוגן בקוד מנהל. מתאים גם לטלפוני מקשים כמו Xiaomi Qin F21 Pro.</p>
+        <div class="hero-cta hero-anim d3">
+          <a class="btn btn-primary" href="#pricing">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            רוצה להתחיל
+          </a>
+          <a class="btn btn-ghost" href="#how">איך זה עובד</a>
+        </div>
+        <div class="hero-trust hero-anim d3">
+          <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> בלי שרת חיצוני</span>
+          <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> המידע נשאר במכשיר</span>
+          <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> וואטסאפ ושיחות עובדים רגיל</span>
+        </div>
+      </div>
+      <!-- Phone mock -->
+      <svg class="phone hero-anim d3" viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="מסך האפליקציה שומר">
+        <rect x="6" y="6" width="248" height="508" rx="38" fill="#0A1526"/>
+        <rect x="16" y="16" width="228" height="488" rx="30" fill="#F5F7FA"/>
+        <rect x="96" y="24" width="68" height="8" rx="4" fill="#0A1526"/>
+        <!-- shield -->
+        <g transform="translate(130 96)">
+          <path d="M0 -34 -26 -22v22c0 17 11 28.5 26 33 15-4.5 26-16 26-33v-22L0 -34Z" fill="#1D4E89" stroke="#E4B65E" stroke-width="2"/>
+          <path d="m-11 2 8 8 16-18" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </g>
+        <text x="130" y="172" text-anchor="middle" font-family="Heebo,sans-serif" font-weight="800" font-size="20" fill="#12203A">ניהול הסינון</text>
+        <rect x="34" y="192" width="192" height="52" rx="12" fill="#EAF1FB"/>
+        <circle cx="204" cy="218" r="8" fill="#2F7D6B"/>
+        <text x="192" y="223" text-anchor="end" font-family="Assistant,sans-serif" font-size="13" fill="#3C4A5E">הסינון פעיל</text>
+        <rect x="34" y="256" width="192" height="42" rx="11" fill="#1D4E89"/>
+        <text x="130" y="282" text-anchor="middle" font-family="Heebo,sans-serif" font-weight="700" font-size="14" fill="#fff">אפליקציות מאושרות</text>
+        <rect x="34" y="308" width="192" height="42" rx="11" fill="#EEF2F7"/>
+        <text x="130" y="334" text-anchor="middle" font-family="Heebo,sans-serif" font-weight="700" font-size="14" fill="#12203A">סינון אתרים</text>
+        <rect x="34" y="360" width="192" height="42" rx="11" fill="#EEF2F7"/>
+        <text x="130" y="386" text-anchor="middle" font-family="Heebo,sans-serif" font-weight="700" font-size="14" fill="#12203A">מגבלת זמן ומצב שבת</text>
+        <rect x="34" y="412" width="192" height="42" rx="11" fill="#F5E7C8"/>
+        <text x="130" y="438" text-anchor="middle" font-family="Heebo,sans-serif" font-weight="700" font-size="14" fill="#7A5A17">רישיון פעיל ✓</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="strip">
+    <div class="wrap">
+      <div class="item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg> סינון בכל הטלפון</div>
+      <div class="item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> קוד מנהל וקוד שחזור</div>
+      <div class="item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> מגבלות זמן ושבת</div>
+      <div class="item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg> גם למחשב Windows</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="wrap">
+      <div class="shead">
+        <p class="eyebrow">מה זה כולל</p>
+        <h2>הגנה שלמה, בלי פשרות</h2>
+        <p>כל הכלים לשמור על טלפון נקי — בממשק פשוט בעברית, שמנוהל רק על ידך.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg></div>
+          <h3>סינון אתרים ותוכן</h3>
+          <p>חסימת אתרים ותוכן לא ראוי בכל הטלפון, בכל הדפדפנים והאפליקציות — לא רק באחד.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></div>
+          <h3>ניהול אפליקציות</h3>
+          <p>אפליקציות שלא אישרת פשוט נעלמות מהמסך, וחנות האפליקציות וההתקנות נחסמות.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+          <h3>קוד מנהל מוגן</h3>
+          <p>כל שינוי דורש קוד. יש גם קוד שחזור חד-פעמי — שכחת את הקוד? מאפסים בלי למחוק את הטלפון.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>מגבלות זמן ושבת</h3>
+          <p>שעות לילה וחלון שבת שבועי — בזמנים האלה רק האפליקציות החיוניות עובדות.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5"/><path d="M5 8v8l7 5 7-5V8"/></svg></div>
+          <h3>חסימת VPN ופרוקסי</h3>
+          <p>חוסם דרכי מעקף נפוצות כמו VPN ופרוקסי, כדי שהסינון יישאר בתוקף.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+          <h3>התראות אבטחה</h3>
+          <p>בהסכמה: הודעה למנהל אם מנסים להסיר את הסינון או להזין קוד שגוי שוב ושוב. שימוש בטלפון לא נאסף.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="how">
+    <div class="wrap">
+      <div class="shead">
+        <p class="eyebrow">איך זה עובד</p>
+        <h2>מותקן ופעיל בכמה דקות</h2>
+        <p>מגיע עם תוכנת מחשב שמתקינה הכול בלחיצה — בלי ידע טכני.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>מחברים למחשב</h3>
+          <p>פותחים את תוכנת שומר במחשב ומחברים את הטלפון בכבל USB. התוכנה מזהה אותו לבד.</p>
+        </div>
+        <div class="step">
+          <h3>מתקינים בלחיצה</h3>
+          <p>לחיצה אחת מתקינה את שומר על הטלפון ומגדירה אותו כמנהל המכשיר.</p>
+        </div>
+        <div class="step">
+          <h3>מפעילים עם קוד</h3>
+          <p>מזינים את קוד הרישיון שקיבלת, בוחרים קוד מנהל ומגדירים מה מותר — וזהו.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="shead" style="margin-inline:auto; text-align:center; max-width:640px">
+        <p class="eyebrow">מחירים ואפשרויות</p>
+        <h2>שלוש דרכים לקבל את שומר</h2>
+        <p>תשלום חד-פעמי, בלי מנוי. אחרי התשלום מקבלים קוד הפעלה אישי לכל מכשיר.</p>
+      </div>
+      <div class="prices">
+        <div class="price">
+          <span class="opt-method">התקנה עצמאית</span>
+          <h3>קובץ APK בלבד</h3>
+          <p class="sub">מקבלים את הקובץ ומתקינים לבד — למי שמתמצא טכנית.</p>
+          <div class="amount">₪10 <small>למכשיר</small></div>
+          <ul>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> הרישיון המלא לטלפון</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> מיידי — מקבלים את הקובץ ישר</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> דורש מחשב ופקודה טכנית להפעלה מלאה</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> בלי השלב הזה חלק מההגנות לא פעילות</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> ללא ליווי בהתקנה</li>
+          </ul>
+          <a class="btn btn-solid" href="#contact">לרכישה</a>
+        </div>
+        <div class="price">
+          <span class="badge">מומלץ</span>
+          <span class="opt-method">התקנה מלאה</span>
+          <h3>טלפון</h3>
+          <p class="sub">אנחנו מתקינים בלחיצה דרך המחשב — בלי כאב ראש.</p>
+          <div class="amount">₪10 <small>למכשיר</small></div>
+          <ul>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> כל ההגנות פעילות אוטומטית</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> התקנה בלחיצה, בלי ידע טכני</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> אתרים, אפליקציות, זמן ושבת</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> כולל ליווי ועדכונים</li>
+          </ul>
+          <a class="btn btn-solid" href="#contact">לרכישה</a>
+        </div>
+        <div class="price feat">
+          <span class="badge">הכי משתלם</span>
+          <span class="opt-method">חבילה מלאה</span>
+          <h3>טלפון + מחשב</h3>
+          <p class="sub">אותה הגנה גם על מחשב Windows.</p>
+          <div class="amount">₪20 <small>חבילה</small></div>
+          <ul>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> כל מה שיש בהתקנה המלאה לטלפון</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> סינון תוכן גם על מחשב Windows</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> נעילת הגדרות בקוד גם במחשב</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> עדיפות בתמיכה</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">לרכישה</a>
+        </div>
+      </div>
+      <p class="price-note">תשלום חד-פעמי דרך יצירת קשר, ואז נשלח קוד הפעלה אישי למכשיר.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="shead" style="margin-inline:auto; text-align:center; max-width:640px">
+        <p class="eyebrow">שאלות נפוצות</p>
+        <h2>כל מה שרצית לדעת</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>וואטסאפ ושיחות ימשיכו לעבוד? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <p>בהחלט. שומר חוסם תוכן ואתרים לא ראויים — לא את האינטרנט עצמו. אפליקציות שאישרת, שיחות וגלישה מותרת עובדים רגיל.</p>
+        </details>
+        <details>
+          <summary>אפשר להסיר את הסינון? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <p>רק עם קוד המנהל. בלי הקוד אי אפשר להסיר, לעצור או לעקוף את הסינון — זו בדיוק המטרה.</p>
+        </details>
+        <details>
+          <summary>על אילו טלפונים זה עובד? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <p>על טלפוני אנדרואיד, כולל טלפוני מקשים כמו Xiaomi Qin F21 Pro. ההתקנה נעשית פעם אחת דרך המחשב.</p>
+        </details>
+        <details>
+          <summary>המידע שלי נשמר איפשהו? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <p>לא. שומר עובד בלי שרת חיצוני שאוסף מידע. ההגדרות נשארות על המכשיר. שימוש באפליקציות וגלישה לא נאספים ולא נשלחים.</p>
+        </details>
+        <details>
+          <summary>מה אם שכחתי את הקוד? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <p>בהתקנה מקבלים קוד שחזור חד-פעמי. איתו אפשר לבחור קוד מנהל חדש בלי למחוק את הטלפון.</p>
+        </details>
+        <details>
+          <summary>קוד רישיון עובד על יותר ממכשיר אחד? <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <p>לא. כל קוד רישיון נעול למכשיר מסוים — טלפון או מחשב — ולא יעבוד על מכשיר אחר. חבילת "טלפון + מחשב" מקבלת שני קודים נפרדים.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="cta">
+        <h2>מוכנים לטלפון נקי?</h2>
+        <p>כתבו לנו כדי לרכוש רישיון או לשאול כל שאלה — נחזור אליכם ונשלח קוד הפעלה אישי.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="https://wa.me/972533526845" target="_blank" rel="noopener">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.94 4.44-9.94 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2c5.5 0 9.94-4.44 9.94-9.9C21.98 6.44 17.54 2 12.04 2Zm5.8 14.05c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.12.24-3.67-.77-3.09-1.22-5.06-4.36-5.21-4.56-.15-.2-1.25-1.66-1.25-3.17 0-1.5.79-2.24 1.07-2.55.28-.3.61-.38.81-.38.2 0 .4.002.58.01.19.008.44-.07.68.53.24.6.83 2.07.9 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.07 1.31 2.37 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.07.13.07.75-.17 1.42Z"/></svg>
+            וואטסאפ
+          </a>
+          <a class="btn btn-ghost" href="mailto:yonatan350668@gmail.com?subject=רכישת%20שומר">מייל</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top">
+      <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 4 8 11v13c0 10 6.8 16.9 16 20 9.2-3.1 16-10 16-20V11L24 4Z" fill="#1D4E89"/>
+        <path d="m16.5 24.5 5 5 10-11" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      שומר
+    </a>
+    <span>© שומר · סינון תוכן לטלפון ולמחשב</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var b=document.getElementById('menuBtn'), n=document.getElementById('navlinks');
+    if(b&&n){ b.addEventListener('click',function(){ n.classList.toggle('open'); });
+      n.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ n.classList.remove('open'); }); }); }
+  })();
+</script>
