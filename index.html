@@ -140,7 +140,10 @@
   .price .sub{color:var(--muted); font-size:14.5px; margin-top:4px; min-height:2.6em}
   .amount{font-family:var(--ff-display); font-weight:900; font-size:40px; margin:14px 0 2px; color:var(--ink)}
   .amount small{font-size:15px; font-weight:600; color:var(--muted)}
-  .price ul{list-style:none; padding:0; margin:18px 0 24px; display:flex; flex-direction:column; gap:10px}
+  .opt-h{font-family:var(--ff-display); font-weight:800; font-size:13px; letter-spacing:.04em; color:var(--ink);
+    margin:16px 0 0}
+  .price ul{list-style:none; padding:0; margin:10px 0 4px; display:flex; flex-direction:column; gap:9px}
+  .price ul:last-of-type{margin-bottom:22px}
   .price li{display:flex; gap:9px; align-items:flex-start; color:var(--muted); font-size:14.5px; line-height:1.45}
   .price li svg{flex:0 0 auto; margin-top:2px}
   .price li.pro svg{color:var(--safe)}
@@ -157,6 +160,18 @@
   summary .chev{transition:transform .2s ease; color:var(--accent); flex:0 0 auto}
   details[open] summary .chev{transform:rotate(180deg)}
   details p{color:var(--muted); font-size:15.5px; padding:0 0 18px}
+
+  /* How to buy */
+  .buy{max-width:720px; margin:0 auto 30px; background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius-lg); padding:30px 32px; box-shadow:var(--shadow-sm)}
+  .buy-title{font-family:var(--ff-display); font-size:22px; font-weight:800; margin-bottom:18px; text-align:center}
+  .buy-steps{margin:0; padding:0; list-style:none; counter-reset:b; display:grid; gap:14px}
+  .buy-steps li{counter-increment:b; position:relative; padding-inline-start:46px; color:var(--muted);
+    font-size:15.5px; line-height:1.5; min-height:32px; display:flex; align-items:center}
+  .buy-steps li b{color:var(--ink)}
+  .buy-steps li::before{content:counter(b); position:absolute; inset-inline-start:0; top:0; width:32px; height:32px;
+    border-radius:50%; display:grid; place-items:center; font-family:var(--ff-display); font-weight:800;
+    font-size:14px; color:#fff; background:var(--primary)}
 
   /* Contact / CTA */
   .cta{background:linear-gradient(160deg,var(--brand-1),var(--brand-2)); color:#EAF1FA; border-radius:var(--radius-lg);
@@ -358,12 +373,18 @@
           <h3>קובץ APK בלבד</h3>
           <p class="sub">מקבלים את הקובץ ומתקינים לבד — למי שמתמצא טכנית.</p>
           <div class="amount">₪10 <small>למכשיר</small></div>
+          <p class="opt-h">יתרונות</p>
           <ul>
-            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> הרישיון המלא לטלפון</li>
-            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> מיידי — מקבלים את הקובץ ישר</li>
-            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> דורש מחשב ופקודה טכנית להפעלה מלאה</li>
-            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> בלי השלב הזה חלק מההגנות לא פעילות</li>
-            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> ללא ליווי בהתקנה</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> הרישיון המלא לטלפון — אותו סינון בדיוק</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> מיידי — מקבלים את הקובץ ומתחילים</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> פרטי — מתקינים לבד, בלי שאף אחד נוגע בטלפון</li>
+          </ul>
+          <p class="opt-h">חסרונות</p>
+          <ul>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> דורש מחשב ופקודה טכנית (adb) להגדרה מלאה</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> בלי השלב הזה אפשר להסיר את הסינון בקלות</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> ללא ליווי או תמיכה בהתקנה</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> מתאים רק למי שמתמצא טכנית</li>
           </ul>
           <a class="btn btn-solid" href="#contact">לרכישה</a>
         </div>
@@ -373,11 +394,18 @@
           <h3>טלפון</h3>
           <p class="sub">אנחנו מתקינים בלחיצה דרך המחשב — בלי כאב ראש.</p>
           <div class="amount">₪10 <small>למכשיר</small></div>
+          <p class="opt-h">יתרונות</p>
           <ul>
-            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> כל ההגנות פעילות אוטומטית</li>
-            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> התקנה בלחיצה, בלי ידע טכני</li>
-            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> אתרים, אפליקציות, זמן ושבת</li>
-            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> כולל ליווי ועדכונים</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> התקנה בלחיצה דרך המחשב — בלי ידע טכני</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> כל ההגנות פעילות אוטומטית — כולל חסימת הסרה</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> אתרים, אפליקציות, מגבלות זמן ושבת</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> קוד שחזור אם שוכחים את קוד המנהל</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> ליווי בהתקנה ועדכונים כלולים</li>
+          </ul>
+          <p class="opt-h">חסרונות</p>
+          <ul>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> צריך מחשב עם כבל USB לרגע ההתקנה (פעם אחת)</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> ההגנה על הטלפון בלבד (לא על המחשב)</li>
           </ul>
           <a class="btn btn-solid" href="#contact">לרכישה</a>
         </div>
@@ -387,11 +415,18 @@
           <h3>טלפון + מחשב</h3>
           <p class="sub">אותה הגנה גם על מחשב Windows.</p>
           <div class="amount">₪20 <small>חבילה</small></div>
+          <p class="opt-h">יתרונות</p>
           <ul>
             <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> כל מה שיש בהתקנה המלאה לטלפון</li>
             <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> סינון תוכן גם על מחשב Windows</li>
             <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> נעילת הגדרות בקוד גם במחשב</li>
+            <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> הכי משתלם — חוסך לעומת קנייה בנפרד</li>
             <li class="pro"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> עדיפות בתמיכה</li>
+          </ul>
+          <p class="opt-h">חסרונות</p>
+          <ul>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> שני מכשירים להגדיר (טלפון + מחשב)</li>
+            <li class="con"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> סינון המחשב עובד על Windows בלבד</li>
           </ul>
           <a class="btn btn-primary" href="#contact">לרכישה</a>
         </div>
@@ -439,6 +474,15 @@
   <!-- CONTACT / CTA -->
   <section id="contact">
     <div class="wrap">
+      <div class="buy">
+        <h3 class="buy-title">איך קונים?</h3>
+        <ol class="buy-steps">
+          <li><b>יוצרים קשר</b> ובוחרים חבילה — טלפון או טלפון + מחשב.</li>
+          <li><b>מקבלים פרטי תשלום</b> ומשלמים (העברה מהירה בביט / פייבוקס).</li>
+          <li><b>שולחים את מזהה המכשיר</b> שמופיע באפליקציה במסך "רישיון".</li>
+          <li><b>מקבלים קוד הפעלה אישי</b> — מדביקים, והסינון פעיל!</li>
+        </ol>
+      </div>
       <div class="cta">
         <h2>מוכנים לטלפון נקי?</h2>
         <p>כתבו לנו כדי לרכוש רישיון או לשאול כל שאלה — נחזור אליכם ונשלח קוד הפעלה אישי.</p>
